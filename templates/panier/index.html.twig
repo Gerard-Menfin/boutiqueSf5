@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Panier{% endblock %}
+
+{% block body %}
+    <table class="table table-bordered">
+        <thead>
+            <th>Produit</th>
+            <th>Prix</th>
+            <th>Quantité</th>
+            <th>Total</th>
+            <th>Actions</th>
+        </thead>
+
+        <tbody>
+            {% set total = 0 %}
+            {% for ligne in panier %}
+                <tr>
+                    <td>{{ ligne.produit.titre }}</td>
+                    <td>{{ ligne.produit.prix }}</td>
+                    <td>{{ ligne.quantite }}</td>
+                    <td>{{ ligne.produit.prix  * ligne.quantite }}</td>
+                    <td>
+                        <a href="{{ path("panier_supprimer", {id: ligne.produit.id}) }}"><i class="fa fa-trash"></i></a>
+                    </td>
+                </tr>
+                {% set total = total + ligne.produit.prix  * ligne.quantite %}
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3">Total</td>
+                <td>{{ total }}</td>
+            </tr>
+        </tfoot>
+    </table>
+{% endblock %}
